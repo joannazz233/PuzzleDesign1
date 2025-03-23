@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Ghosts | Mystery & Adventure Theme</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Special+Elite&family=VT323&display=swap');
+    
+    body {
+      font-family: 'Special Elite', cursive;
+      background-color: #1A2930; /* Deep Indigo Blue */
+      color: #DCC9A9;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Overlay texture for aged effect */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.2;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'IM Fell English', serif;
+      letter-spacing: 1px;
+    }
+    
+    /* Aged text effect */
+    .aged-text {
+      color: #8B0000;
+      text-shadow: 0.5px 0.5px 0px rgba(139, 0, 0, 0.3);
+    }
+    
+    /* Vintage paper texture */
+    .old-paper {
+      position: relative;
+      background-color: #EDE0C8;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.075'/%3E%3C/svg%3E");
+      color: #6D4C41;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+    }
+    
+    /* Typewriter text effect */
+    .typewriter {
+      overflow: hidden;
+      border-right: 0.15em solid #8B0000;
+      white-space: nowrap;
+      letter-spacing: 0.15em;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #8B0000 }
+    }
+    
+    /* Flickering text effect like old lights */
+    .flicker-text {
+      animation: flicker 4s linear infinite;
+    }
+    
+    @keyframes flicker {
+      0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        opacity: 0.99;
+        text-shadow: 0 0 4px #DCC9A9, 0 0 11px #8B0000;
+      }
+      20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+        opacity: 0.4;
+        text-shadow: none;
+      }
+    }
+    
+    /* Glow effect for primary buttons */
+    .btn-primary {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background-color: #8B0000;
+      color: #DCC9A9;
+      border: 2px solid #C49A3A;
+    }
+    
+    .btn-primary:hover {
+      box-shadow: 0 0 8px gold;
+      transform: translateY(-3px);
+    }
+    
+    .btn-primary:active {
+      transform: scale(0.95);
+    }
+    
+    /* Secondary button */
+    .btn-secondary {
+      position: relative;
+      z-index: 1;
+      background-color: transparent;
+      color: #DCC9A9;
+      border: 2px solid #8B0000;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      box-shadow: 0 0 8px gold;
+      transform: translateY(-3px);
+    }
+    
+    .btn-secondary:active {
+      transform: scale(0.95);
+    }
+    
+    /* Puzzle location cards */
+    .puzzle-card {
+      border: 2px solid #C49A3A;
+      background-color: rgba(26, 41, 48, 0.8); /* Slightly lighter than background */
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+    
+    .puzzle-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    
+    .puzzle-card:hover {
+      transform: translateY(-5px) rotate(1deg);
+      box-shadow: 0 0 15px rgba(196, 154, 58, 0.4);
+      border-color: #C49A3A;
+    }
+    
+    /* Location tag style */
+    .location-tag {
+      background-color: #4E6851;
+      color: #DCC9A9;
+      font-family: 'IM Fell English', serif;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      border-radius: 3px;
+    }
+    
+    .vintage-photo {
+      filter: sepia(40%) contrast(1.1) brightness(0.9);
+      border: 4px solid #C49A3A;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Navigation items */
+    .nav-item {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #8B0000;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-item:hover::after {
+      width: 100%;
+    }
+    
+    /* Input fields */
+    .form-input {
+      background-color: #EDE0C8;
+      border: 2px solid #6D4C41;
+      color: #6D4C41;
+      transition: all 0.3s ease;
+    }
+    
+    .form-input:focus {
+      border-color: #8B0000;
+      box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.2);
+      outline: none;
+    }
+    
+    /* Dialog/Modal styles */
+    .modal {
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 2px solid #C49A3A;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    
+    /* Code/Puzzle text */
+    .code-text {
+      font-family: 'VT323', monospace;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .mobile-menu {
+        display: none;
+      }
+      
+      .mobile-menu.active {
+        display: flex;
+      }
+    }
+
+    /* Page transition animation */
+    .page-transition {
+      animation: pageFlip 0.5s ease-in-out;
+    }
+    
+    @keyframes pageFlip {
+      0% {
+        opacity: 0;
+        transform: rotateY(-10deg);
+      }
+      100% {
+        opacity: 1;
+        transform: rotateY(0);
+      }
+    }
+    
+    /* Shake animation for errors */
+    .shake {
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen flex flex-col page-transition">
+    <!-- Navigation -->
+    <nav class="bg-opacity-90 bg-black backdrop-filter backdrop-blur-sm fixed w-full z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a href="#" class="flex-shrink-0 flex items-center">
+              <div class="h-12 w-12 relative">
+                <div class="absolute inset-0 rounded-full overflow-hidden" style="transform: rotate(45deg); background-color: #C49A3A;">
+                  <div class="absolute inset-2 bg-black rounded-sm flex items-center justify-center" style="transform: rotate(45deg);">
+                    <span class="text-2xl font-bold" style="color: #DCC9A9; transform: rotate(-90deg);">D</span>
+                  </div>
+                </div>
+              </div>
+              <span class="ml-3 text-2xl font-bold flicker-text">Digital Ghosts</span>
+            </a>
+          </div>
+          
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="#" class="nav-item text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Home</a>
+            <a href="#" class="nav-item text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Leaderboard</a>
+            <a href="#" class="nav-item text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">About</a>
+            <a href="#" class="btn-primary ml-4 inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md">
+              Sign In
+            </a>
+          </div>
+          
+          <div class="flex items-center md:hidden">
+            <button id="mobile-menu-button" class="text-gray-400 hover:text-white focus:outline-none">
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="mobile-menu md:hidden bg-gray-900 pb-3 px-4">
+        <div class="flex flex-col space-y-2 pt-2">
+          <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">Home</a>
+          <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">Leaderboard</a>
+          <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">About</a>
+          <a href="#" class="btn-primary mt-2 block w-full text-center px-4 py-2 border text-base font-medium rounded-md">
+            Sign In
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="flex-grow">
+      <div class="pt-16">
+        <div class="relative overflow-hidden">
+          <!-- Hero section with main content -->
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 relative z-1">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div class="space-y-8">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
+                  Uncover <span class="text-white">The</span> <span class="aged-text">Digital Ghosts</span>
+                </h1>
+                <div class="h-12 overflow-hidden">
+                  <p class="typewriter text-lg md:text-xl" style="color: #DCC9A9;">
+                    Discover the hidden keys. Solve the puzzles. Find the Hacker's Treasure.
+                  </p>
+                </div>
+                <p class="text-gray-400 max-w-lg">
+                  A new student at Flinders University accidentally discovers a mysterious legend circulating around campus — "Digital Ghosts" have hidden treasure keys throughout the campus.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                  <a href="#" class="btn-primary inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md">
+                    Join the Hunt
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </a>
+                  <a href="#" class="btn-secondary inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md">
+                    Learn More
+                  </a>
+                </div>
+              </div>
+              
+              <div class="relative hidden md:block">
+                <!-- Vintage letter/note -->
+                <div class="old-paper p-6 transform rotate-3 shadow-xl">
+                  <!-- Coffee stain effect -->
+                  <div class="absolute top-5 right-10 w-20 h-20 rounded-full" style="background: radial-gradient(ellipse at center, rgba(139, 0, 0, 0.15) 0%, rgba(139, 0, 0, 0) 70%); opacity: 0.7;"></div>
+                  
+                  <div class="text-right text-sm mb-4">September 12, 1982</div>
+                  <p class="mb-3">My dear friend,</p>
+                  <p class="mb-3">I've discovered something extraordinary at Flinders University. The old stories about the "Digital Ghosts" appear to be true.</p>
+                  <p class="mb-3">Find me at the Puzzle Club. The first clue is in the bulletin board poster. Look for hidden words like "HACK" and "CODE".</p>
+                  <p class="text-right mt-4">—Professor Enigma</p>
+                  
+                  <!-- Wax seal image -->
+                  <div class="absolute -bottom-5 right-10 h-12 w-12 rounded-full" style="background-color: #8B0000; transform: rotate(-15deg);">
+                    <div class="absolute inset-2 flex items-center justify-center text-xs" style="color: #DCC9A9;">
+                      D.G.
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Shadow effect -->
+                <div class="absolute -bottom-4 left-8 right-8 h-10 bg-black opacity-30 blur-xl rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Adventure Levels Section -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-1">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold tracking-tight">
+              Start Your <span class="aged-text">Adventure</span>
+            </h2>
+            <p class="mt-4 max-w-2xl mx-auto text-gray-400">
+              To unravel the mystery, join the "Puzzle Club" and work together with companions using code, logic, and creativity.
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Level 1: Bulletin Board -->
+            <div class="puzzle-card rounded-lg overflow-hidden shadow-lg">
+              <div class="relative pb-60">
+                <!-- Vintage style photo of a university bulletin board -->
+                <img src="/api/placeholder/400/300" alt="University Bulletin Board" class="absolute inset-0 h-full w-full object-cover vintage-photo" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                <div class="absolute bottom-0 left-0 p-4">
+                  <div class="location-tag inline-block mb-2">
+                    Bulletin Board
+                  </div>
+                  <h3 class="text-xl font-bold text-white mb-1">Club Recruitment Challenge</h3>
+                  <p class="text-sm text-gray-300">Word Search | Level 1</p>
+                </div>
+              </div>
+              <div class="p-4 bg-black bg-opacity-50">
+                <p class="text-sm text-gray-300 mb-4">
+                  Find hidden words like "HACK" and "CODE" in the letter grid on the club recruitment poster to earn club admission.
+                </p>
+                <div class="flex justify-end">
+                  <a href="#" class="inline-flex items-center text-sm font-medium aged-text">
+                    Start Challenge
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Level 2: Club Room -->
+            <div class="puzzle-card rounded-lg overflow-hidden shadow-lg">
+              <div class="relative pb-60">
+                <!-- Vintage style photo of a club room -->
+                <img src="/api/placeholder/400/300" alt="Club Room" class="absolute inset-0 h-full w-full object-cover vintage-photo" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                <!-- Locked overlay -->
+                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-60">
+                  <div class="bg-black bg-opacity-80 p-3 rounded-full" style="box-shadow: 0 0 10px rgba(139, 0, 0, 0.3);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="#8B0000">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="absolute bottom-0 left-0 p-4">
+                  <div class="location-tag inline-block mb-2">
+                    Club Room
+                  </div>
+                  <h3 class="text-xl font-bold text-white mb-1">Wi-Fi Password Hack</h3>
+                  <p class="text-sm text-gray-300">Word Ladder | Level 2</p>
+                </div>
+              </div>
+              <div class="p-4 bg-black bg-opacity-50">
+                <p class="text-sm text-gray-300 mb-4">
+                  Change "WIFI" into "FREE" to hack the club's encrypted network and download the treasure map fragments.
+                </p>
+                <div class="flex justify-end">
+                  <span class="inline-flex items-center text-sm font-medium text-gray-500">
+                    Locked
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Level 3: Club Room (Escape) -->
+            <div class="puzzle-card rounded-lg overflow-hidden shadow-lg">
+              <div class="relative pb-60">
+                <!-- Vintage style photo of a dark room -->
+                <img src="/api/placeholder/400/300" alt="Dark Club Room" class="absolute inset-0 h-full w-full object-cover vintage-photo" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                <!-- Locked overlay -->
+                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-60">
+                  <div class="bg-black bg-opacity-80 p-3 rounded-full" style="box-shadow: 0 0 10px rgba(139, 0, 0, 0.3);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="#8B0000">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="absolute bottom-0 left-0 p-4">
+                  <div class="location-tag inline-block mb-2">
+                    Club Room
+                  </div>
+                  <h3 class="text-xl font-bold text-white mb-1">Escape Room</h3>
+                  <p class="text-sm text-gray-300">Swap Puzzle | Level 3</p>
+                </div>
+              </div>
+              <div class="p-4 bg-black bg-opacity-50">
+                <p class="text-sm text-gray-300 mb-4">
+                  The club activity room suddenly loses power! Quickly swap components on the circuit board to restart the power.
+                </p>
+                <div class="flex justify-end">
+                  <span class="inline-flex items-center text-sm font-medium text-gray-500">
+                    Locked
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-10 text-center">
+            <a href="#" class="btn-secondary inline-flex items-center px-6 py-3 text-base font-medium rounded-md">
+              View All Levels
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <footer class="bg-black bg-opacity-70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center">
+              <div class="h-8 w-8 relative mr-2">
+                <div class="absolute inset-0 rounded-full overflow-hidden" style="transform: rotate(45deg); background-color: #C49A3A;">
+                  <div class="absolute inset-1 bg-black rounded-sm flex items-center justify-center" style="transform: rotate(45deg);">
+                    <span class="text-xs font-bold" style="color: #DCC9A9; transform: rotate(-90deg);">D</span>
+                  </div>
+                </div>
+              </div>
+              <span class="text-sm text-gray-400">© 2025 Digital Ghosts. All rights reserved.</span>
+            </div>
+            <div class="mt-4 md:mt-0 flex space-x-6">
+              <a href="#" class="text-gray-400 hover:text-white">Privacy</a>
+              <a href="#" class="text-gray-400 hover:text-white">Terms</a>
+              <a href="#" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
